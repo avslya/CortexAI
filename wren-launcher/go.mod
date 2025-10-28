@@ -1,4 +1,3 @@
-// Cortex AI Launcher Module
 module github.com/Canner/CortexAI/wren-launcher
 
 go 1.24
