@@ -1,4 +1,5 @@
 # cortex-ai-service
+
 cortex-ai-service/.env.*
 cortex-ai-service/config.yaml*
 !cortex-ai-service/.env.*.example
