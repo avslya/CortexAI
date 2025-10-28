@@ -4,7 +4,7 @@
 
 ## Overview
 
-Cortex AI is an open-source platform that combines AI agents with advanced data analytics capabilities.
+Cortex AI is an open-source platform that combines AI agents with advanced data analytics capabilities. It enables natural language querying of databases, automated SQL generation, and intelligent business insights through a semantic layer architecture.
 
 ## Core Features
 
