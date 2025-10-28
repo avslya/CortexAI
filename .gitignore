@@ -1,0 +1,111 @@
+# cortex-ai-service
+cortex-ai-service/.env.*
+cortex-ai-service/config.yaml*
+!cortex-ai-service/.env.*.example
+!cortex-ai-service/src/eval/cortex-engine/.env
+cortex-ai-service/src/eval/cortex-engine/**/config.properties
+cortex-ai-service/src/eval/cortex-engine/etc/mdl/*
+cortex-ai-service/src/eval/cortex-engine/etc/duckdb
+cortex-ai-service/src/eval/cortex-engine/etc/archived
+cortex-ai-service/src/eval/data
+cortex-ai-service/**/outputs/
+cortex-ai-service/**/spider/
+cortex-ai-service/tests/data/usecases/
+!cortex-ai-service/**/metrics/spider/
+!cortex-ai-service/tests/data
+!cortex-ai-service/src/eval/data/book_2*.json
+!cortex-ai-service/src/eval/data/baseball_1*.json
+!cortex-ai-service/src/eval/data/college_3*.json
+!cortex-ai-service/src/eval/data/college_3_optimal_ddl.json
+cortex-ai-service/*.csv
+cortex-ai-service/*.json
+cortex-ai-service/assertion.log
+cortex-ai-service/redis.*
+cortex-ai-service/demo/spider
+cortex-ai-service/demo/poetry.lock
+cortex-ai-service/demo/custom_dataset
+cortex-ai-service/demo/.env
+cortex-ai-service/tools/dev/etc/**
+.deepeval-cache.json
+.deepeval_telemtry.txt
+docker/config.yaml
+docker/docker-compose-local.yaml
+docker/data
+
+# python
+.python-version
+
+# cache
+__pycache__
+local_cache
+.ruff_cache
+.pytest_cache
+
+# ide
+.idea
+.vscode/
+
+# os
+.DS_Store
+__MACOSX/
+*.pem
+
+# sqlite
+*.sqlite
+*.sqlite3
+
+# ui
+## dependencies
+node_modules
+.pnp
+.pnp.jsfs
+
+## testing
+cortex-ui/coverage
+cortex-ui/test-results
+cortex-ui/playwright-report
+cortex-ui/e2e/e2e.config.json
+
+## next.js
+cortex-ui/.next
+cortex-ui/out
+
+cortex-ui/.yarn/install-state.gz
+
+## production
+cortex-ui/build
+
+## debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+## local env files
+.env*.local
+.env*
+.env.ai
+
+## vercel
+.vercel
+
+## typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# cortex-launcher
+cortex-launcher/dist
+cortex-launcher/main
+cortex-launcher/
+
+# Ignore top-level project directories
+/cortex-launcher/
+/cortex-mdl/
+/cortex-service/
+/cortex-ui/
+/deployment/
+/docker/
+
+## temporary files
+.tmp
+
+!cortex-ai-service/tools/.env.example
