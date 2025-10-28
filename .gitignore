@@ -1,31 +1,31 @@
-# cortex-ai-service
-cortex-ai-service/.env.*
-cortex-ai-service/config.yaml*
-!cortex-ai-service/.env.*.example
-!cortex-ai-service/src/eval/cortex-engine/.env
-cortex-ai-service/src/eval/cortex-engine/**/config.properties
-cortex-ai-service/src/eval/cortex-engine/etc/mdl/*
-cortex-ai-service/src/eval/cortex-engine/etc/duckdb
-cortex-ai-service/src/eval/cortex-engine/etc/archived
-cortex-ai-service/src/eval/data
-cortex-ai-service/**/outputs/
-cortex-ai-service/**/spider/
-cortex-ai-service/tests/data/usecases/
-!cortex-ai-service/**/metrics/spider/
-!cortex-ai-service/tests/data
-!cortex-ai-service/src/eval/data/book_2*.json
-!cortex-ai-service/src/eval/data/baseball_1*.json
-!cortex-ai-service/src/eval/data/college_3*.json
-!cortex-ai-service/src/eval/data/college_3_optimal_ddl.json
-cortex-ai-service/*.csv
-cortex-ai-service/*.json
-cortex-ai-service/assertion.log
-cortex-ai-service/redis.*
-cortex-ai-service/demo/spider
-cortex-ai-service/demo/poetry.lock
-cortex-ai-service/demo/custom_dataset
-cortex-ai-service/demo/.env
-cortex-ai-service/tools/dev/etc/**
+# cortex-service
+cortex-service/.env.*
+cortex-service/config.yaml*
+!cortex-service/.env.*.example
+!cortex-service/src/eval/cortex-engine/.env
+cortex-service/src/eval/cortex-engine/**/config.properties
+cortex-service/src/eval/cortex-engine/etc/mdl/*
+cortex-service/src/eval/cortex-engine/etc/duckdb
+cortex-service/src/eval/cortex-engine/etc/archived
+cortex-service/src/eval/data
+cortex-service/**/outputs/
+cortex-service/**/spider/
+cortex-service/tests/data/usecases/
+!cortex-service/**/metrics/spider/
+!cortex-service/tests/data
+!cortex-service/src/eval/data/book_2*.json
+!cortex-service/src/eval/data/baseball_1*.json
+!cortex-service/src/eval/data/college_3*.json
+!cortex-service/src/eval/data/college_3_optimal_ddl.json
+cortex-service/*.csv
+cortex-service/*.json
+cortex-service/assertion.log
+cortex-service/redis.*
+cortex-service/demo/spider
+cortex-service/demo/poetry.lock
+cortex-service/demo/custom_dataset
+cortex-service/demo/.env
+cortex-service/tools/dev/etc/**
 .deepeval-cache.json
 .deepeval_telemtry.txt
 docker/config.yaml
@@ -100,4 +100,4 @@ cortex-launcher/
 ## temporary files
 .tmp
 
-!cortex-ai-service/tools/.env.example
+!cortex-service/tools/.env.example

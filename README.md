@@ -79,13 +79,12 @@ Cortex AI integrates with multiple AI providers:
 
 ```
 cortex-ai/
-├── cortex-ai-service/    # AI agent engine and processing
+├── cortex-service/       # AI agent engine and processing
 ├── cortex-ui/            # Web interface
-├── cortex-engine/        # Query execution engine
 ├── cortex-launcher/      # Deployment utilities
 ├── cortex-mdl/           # Semantic layer schema
-├── docker/             # Docker configurations
-└── deployment/         # Kubernetes deployments
+├── docker/               # Docker configurations
+└── deployment/           # Kubernetes deployments
 ```
 
 ## Development
