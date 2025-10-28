@@ -35,7 +35,7 @@ Cortex AI consists of several key components:
 - Docker and Docker Compose
 - API keys for your chosen LLM provider
 
-### Installation Steps
+### Quick Start
 
 1. Clone the repository
 2. Navigate to the `docker` directory
