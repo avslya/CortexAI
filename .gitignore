@@ -98,7 +98,6 @@ cortex-launcher/main
 cortex-launcher/
 
 # Ignore top-level project directories
-/cortex-service/
 /cortex-ui/
 /deployment/
 /docker/
