@@ -98,13 +98,11 @@ cortex-launcher/main
 cortex-launcher/
 
 # Ignore top-level project directories
-/cortex-launcher/
 /cortex-mdl/
 /cortex-service/
 /cortex-ui/
 /deployment/
 /docker/
-
 ## temporary files
 .tmp
 
