@@ -1,5 +1,7 @@
 # Cortex AI
 
+<!-- Version 1.0 -->
+
 > AI-Powered Data Analytics Platform with Intelligent Agents
 
 ## Overview
