@@ -97,8 +97,6 @@ cortex-launcher/dist
 cortex-launcher/main
 cortex-launcher/
 
-# Ignore top-level project directories
-/docker/
 ## temporary files
 .tmp
 

@@ -1,0 +1,122 @@
+version: "3"
+
+volumes:
+  data:
+
+networks:
+  cortex:
+    driver: bridge
+
+services:
+  bootstrap:
+    image: ghcr.io/canner/cortex-bootstrap:${cortex_BOOTSTRAP_VERSION}
+    restart: on-failure
+    platform: ${PLATFORM}
+    environment:
+      DATA_PATH: /app/data
+    volumes:
+      - data:/app/data
+    command: /bin/sh /app/init.sh
+
+  cortex-engine:
+    image: ghcr.io/canner/cortex-engine:${cortex_ENGINE_VERSION}
+    restart: on-failure
+    platform: ${PLATFORM}
+    expose:
+      - ${cortex_ENGINE_PORT}
+      - ${cortex_ENGINE_SQL_PORT}
+    volumes:
+      - data:/usr/src/app/etc
+      - ${PROJECT_DIR}/data:/usr/src/app/data
+    networks:
+      - cortex
+    depends_on:
+      - bootstrap
+
+  ibis-server:
+    image: ghcr.io/canner/cortex-engine-ibis:${IBIS_SERVER_VERSION}
+    restart: on-failure
+    platform: ${PLATFORM}
+    expose:
+      - ${IBIS_SERVER_PORT}
+    environment:
+      cortex_ENGINE_ENDPOINT: http://cortex-engine:${cortex_ENGINE_PORT}
+    volumes:
+      - ${LOCAL_STORAGE:-.}:/usr/src/app/data
+    networks:
+      - cortex
+
+  cortex-ai-service:
+    image: ghcr.io/canner/cortex-ai-service:${cortex_AI_SERVICE_VERSION}
+    restart: on-failure
+    platform: ${PLATFORM}
+    expose:
+      - ${cortex_AI_SERVICE_PORT}
+    ports:
+      - ${AI_SERVICE_FORWARD_PORT}:${cortex_AI_SERVICE_PORT}
+    environment:
+      # sometimes the console won't show print messages,
+      # using PYTHONUNBUFFERED: 1 can fix this
+      PYTHONUNBUFFERED: 1
+      CONFIG_PATH: /app/config.yaml
+    env_file:
+      - ${PROJECT_DIR}/.env
+    volumes:
+      - ${PROJECT_DIR}/config.yaml:/app/config.yaml:ro
+      - ${PROJECT_DIR}/data:/app/data:ro
+    networks:
+      - cortex
+    depends_on:
+      - qdrant
+
+  qdrant:
+    image: qdrant/qdrant:v1.11.0
+    restart: on-failure
+    expose:
+      - 6333
+      - 6334
+    volumes:
+      - data:/qdrant/storage
+    networks:
+      - cortex
+
+  cortex-ui:
+    image: ghcr.io/canner/cortex-ui:${cortex_UI_VERSION}
+    restart: on-failure
+    platform: ${PLATFORM}
+    environment:
+      DB_TYPE: sqlite
+      # /app is the working directory in the container
+      SQLITE_FILE: /app/data/db.sqlite3
+      cortex_ENGINE_ENDPOINT: http://cortex-engine:${cortex_ENGINE_PORT}
+      cortex_AI_ENDPOINT: http://cortex-ai-service:${cortex_AI_SERVICE_PORT}
+      IBIS_SERVER_ENDPOINT: http://ibis-server:${IBIS_SERVER_PORT}
+      # this is for telemetry to know the model, i think ai-service might be able to provide a endpoint to get the information
+      GENERATION_MODEL: ${GENERATION_MODEL}
+      # telemetry
+      cortex_ENGINE_PORT: ${cortex_ENGINE_PORT}
+      cortex_AI_SERVICE_VERSION: ${cortex_AI_SERVICE_VERSION}
+      cortex_UI_VERSION: ${cortex_UI_VERSION}
+      cortex_ENGINE_VERSION: ${cortex_ENGINE_VERSION}
+      USER_UUID: ${USER_UUID}
+      POSTHOG_API_KEY: ${POSTHOG_API_KEY}
+      POSTHOG_HOST: ${POSTHOG_HOST}
+      TELEMETRY_ENABLED: ${TELEMETRY_ENABLED}
+      # client side
+      NEXT_PUBLIC_USER_UUID: ${USER_UUID}
+      NEXT_PUBLIC_POSTHOG_API_KEY: ${POSTHOG_API_KEY}
+      NEXT_PUBLIC_POSTHOG_HOST: ${POSTHOG_HOST}
+      NEXT_PUBLIC_TELEMETRY_ENABLED: ${TELEMETRY_ENABLED}
+      EXPERIMENTAL_ENGINE_RUST_VERSION: ${EXPERIMENTAL_ENGINE_RUST_VERSION}
+      # configs
+      cortex_PRODUCT_VERSION: ${cortex_PRODUCT_VERSION}
+    ports:
+      # HOST_PORT is the port you want to expose to the host machine
+      - ${HOST_PORT}:3000
+    volumes:
+      - data:/app/data
+    networks:
+      - cortex
+    depends_on:
+      - cortex-ai-service
+      - cortex-engine
