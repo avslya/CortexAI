@@ -31,8 +31,7 @@ Cortex AI consists of several key components:
 
 ## Getting Started
 
-**Prerequisites**
-
+### Prerequisites
 - Docker and Docker Compose
 - API keys for your chosen LLM provider
 
