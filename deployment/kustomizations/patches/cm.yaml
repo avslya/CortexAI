@@ -1,0 +1,35 @@
+- op: replace
+  path: /data
+  value:
+    # cortex Engine Service Port
+    cortex_ENGINE_PORT: "8080"
+    # cortex ai Service Port
+    cortex_AI_SERVICE_PORT: "5555"
+
+    #Release version used by cortex ui https://github.com/Canner/cortexAI/blob/main/docker/docker-compose.yaml#L85-L88
+    cortex_PRODUCT_VERSION: "0.12.0"
+    #fix:
+    cortex_ENGINE_VERSION: "0.12.3"
+    cortex_AI_SERVICE_VERSION: "0.12.1"
+    #fix:
+    cortex_UI_VERSION: "0.17.6"
+
+    # OpenAI
+    GENERATION_MODEL: "gpt-4o-mini"
+
+    # Telemetry
+    POSTHOG_HOST: "https://app.posthog.com"
+    TELEMETRY_ENABLED: "false"
+
+    # service endpoints of AI service & engine service
+    cortex_ENGINE_ENDPOINT: "http://cortex-engine-svc:8080"
+    #fix:
+    cortex_AI_ENDPOINT: "http://cortex-ai-service:5555"
+
+    # "pg" for postgres as application database.
+    #fix
+    DB_TYPE: pg
+
+    DATA_PATH: "/app/data"
+
+    ### if DB_TYPE = "postgres" you must provide PG_URL string in the *Secret* manifest file (deployment/kustomizations/examples/secret-cortex_example.yaml) to connect to postgres

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cortex-engine-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cortex-engine
+  template:
+    metadata:
+      labels:
+        app: cortex-engine
+    spec:
+      volumes:
+        - name: cortex-data
+          persistentVolumeClaim:
+            claimName: cortex-data-pvc
+      initContainers:
+        - name: bootstrap
+          image: ghcr.io/canner/cortex-bootstrap:0.1.4
+          env:
+            - name: DATA_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_ENGINE_DATA_PATH
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cortexai-postgresql
+                  key: postgres-password
+            - name: PG_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: cortexai-secrets
+                  key: PG_USERNAME
+          volumeMounts:
+            - name: cortex-data
+              mountPath: /app/data
+          command: ["/bin/sh", "/app/init.sh"]
+      containers:
+        - name: cortex-engine
+          image: ghcr.io/canner/cortex-engine:0.4.4
+          ports:
+            - containerPort: 8080
+            - containerPort: 7432
+          volumeMounts:
+            - name: cortex-data
+              mountPath: /usr/src/app/etc

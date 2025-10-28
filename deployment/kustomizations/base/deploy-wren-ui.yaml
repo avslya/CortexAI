@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cortex-ui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cortex-ui
+  template:
+    metadata:
+      labels:
+        app: cortex-ui
+    spec:
+      containers:
+
+        - name: cortex-ui
+          image: ghcr.io/canner/cortex-ui:0.5.6
+          env:
+            - name: DB_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_UI_DB_TYPE
+            - name: cortex_ENGINE_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_ENGINE_ENDPOINT
+            - name: cortex_AI_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_AI_ENDPOINT
+            - name: GENERATION_MODEL
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: GENERATION_MODEL
+            - name: PG_URL
+              valueFrom:
+                secretKeyRef:
+                  name: cortexai-secrets
+                  key: PG_URL
+            # telemetry
+            - name: cortex_ENGINE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_ENGINE_PORT
+            - name: cortex_AI_SERVICE_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_AI_SERVICE_VERSION
+            - name: cortex_UI_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_UI_VERSION
+            - name: cortex_ENGINE_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_ENGINE_VERSION
+            - name: USER_UUID
+              valueFrom:
+                secretKeyRef:
+                  name: cortexai-secrets
+                  key: USER_UUID
+            - name: POSTHOG_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cortexai-secrets
+                  key: POSTHOG_API_KEY
+            - name: POSTHOG_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: cortexai-secrets
+                  key: POSTHOG_HOST
+            - name: TELEMETRY_ENABLED
+              valueFrom: 
+                configMapKeyRef:
+                  name: cortex-config
+                  key: TELEMETRY_ENABLED
+            # client side
+            - name: NEXT_PUBLIC_USER_UUID
+              valueFrom:
+                secretKeyRef:
+                  name: cortexai-secrets
+                  key: USER_UUID
+            - name: NEXT_PUBLIC_POSTHOG_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cortexai-secrets
+                  key: POSTHOG_API_KEY
+            - name: NEXT_PUBLIC_POSTHOG_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: cortexai-secrets
+                  key: POSTHOG_HOST
+            - name: NEXT_PUBLIC_TELEMETRY_ENABLED
+              valueFrom: 
+                configMapKeyRef:
+                  name: cortex-config
+                  key: TELEMETRY_ENABLED
+            # configs
+            - name: cortex_PRODUCT_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_PRODUCT_VERSION
+            - name: IBIS_SERVER_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: IBIS_SERVER_ENDPOINT
+          ports:
+            - containerPort: 3000

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cortex-ibis-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cortex-ibis
+  template:
+    metadata:
+      labels:
+        app: cortex-ibis
+    spec:
+      containers:
+        - name: cortex-ibis
+          image: ghcr.io/canner/cortex-engine-ibis:0.5.0
+          env:
+            - name: cortex_ENGINE_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: cortex_ENGINE_ENDPOINT
+            - name: LOGGING_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: cortex-config
+                  key: LOGGING_LEVEL
+          ports:
+            - containerPort: 8000
