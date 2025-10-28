@@ -1,6 +1,5 @@
 package main
 
-// Main entry point
 import (
 	"flag"
 	"os"
